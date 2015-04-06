@@ -20,8 +20,8 @@
         <!--Left Die-->
         <FrameLayout
             android:id="@+id/die1"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="140dip"
+            android:layout_height="140dip"
             android:layout_centerVertical="true"
             android:background="@drawable/die_face_1"
             />
@@ -29,9 +29,10 @@
         <!--Right Die-->
         <FrameLayout
             android:id="@+id/die2"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="140dip"
+            android:layout_height="140dip"
             android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
             android:background="@drawable/die_face_1"
             />
 

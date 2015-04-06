@@ -61,6 +61,7 @@ public class MainActivity extends ActionBarActivity {
                 pic = getResources().getDrawable(R.drawable.die_face_6);
                 break;
         }
+        layout.setBackground(pic);
     }
 
     @Override
