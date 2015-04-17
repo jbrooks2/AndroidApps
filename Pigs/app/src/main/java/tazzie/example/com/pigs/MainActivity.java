@@ -37,6 +37,8 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this,Player2.class);
                 intent.putExtra("score", 99);
+                // prevents new stacks of activity
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
             }
         });
