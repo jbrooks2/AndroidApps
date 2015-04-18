@@ -79,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:paddingTop="5dp"
-                android:text="Round: 0"
+                android:text="Round: 1"
                 android:textColor="@color/button_text"
                 android:textSize="30sp"/>
 

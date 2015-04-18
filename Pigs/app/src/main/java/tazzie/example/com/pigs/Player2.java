@@ -22,6 +22,7 @@ public class Player2 extends ActionBarActivity {
     private Button roll_button, hold;
     private TextView player1, player2, round;
     private int tempScore2, roundNum, score1, score2;
+    private boolean winnerFound = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,8 @@ public class Player2 extends ActionBarActivity {
                 score2 += tempScore2;
                 roundNum++;
                 if (score2 > 99) {
+                    roll_button.setVisibility(View.GONE);
+                    winnerFound = true;
                     AlertDialog alertDialog = new AlertDialog.Builder(Player2.this).create();
                     alertDialog.setTitle("You Won!");
                     alertDialog.setMessage("Cowabunga!");
@@ -74,13 +77,13 @@ public class Player2 extends ActionBarActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
+                                    nextPlayerTurn();
                                 }
                             });
                     alertDialog.show();
                 }
-                else {
+                else
                     nextPlayerTurn();
-                }
             }
         });
     }
@@ -98,6 +101,7 @@ public class Player2 extends ActionBarActivity {
     // Ends turn if a die is value 1
     public void setScore(int val1, int val2){
         if (val1 == 1 || val2 == 1) {
+            roll_button.setVisibility(View.GONE);
             roundNum++;
             AlertDialog alertDialog = new AlertDialog.Builder(Player2.this).create();
             alertDialog.setTitle("Rolled 1");
@@ -119,13 +123,24 @@ public class Player2 extends ActionBarActivity {
     }
 
     public void nextPlayerTurn(){
-        Intent intent = new Intent(Player2.this, MainActivity.class);
-        intent.putExtra("score1", score1);
-        intent.putExtra("score2", score2);
-        intent.putExtra("roundNum", roundNum);
-        // prevents new stacks of activity
-        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        startActivity(intent);
+        if (winnerFound) {
+            Intent intent = new Intent(Player2.this, MainActivity.class);
+            intent.putExtra("score1", 0);
+            intent.putExtra("score2", 0);
+            intent.putExtra("roundNum", 1);
+            // prevents new stacks of activity
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(intent);
+        }
+        else {
+            Intent intent = new Intent(Player2.this, MainActivity.class);
+            intent.putExtra("score1", score1);
+            intent.putExtra("score2", score2);
+            intent.putExtra("roundNum", roundNum);
+            // prevents new stacks of activity
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(intent);
+        }
     }
 
     // set appropriate picture to die
