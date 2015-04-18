@@ -35,14 +35,14 @@
                 android:layout_height="wrap_content"
                 android:text="P2: "
                 android:textSize="20sp"
-                android:id="@+id/p1"
+                android:id="@+id/p2"
                 android:layout_weight="0.3"/>
             <TextView
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:text="P1: "
                 android:textSize="20sp"
-                android:id="@+id/p2"
+                android:id="@+id/p1"
                 android:layout_weight="0.3"/>
         </LinearLayout>
 

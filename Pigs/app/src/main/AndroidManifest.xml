@@ -9,7 +9,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="tazzie.example.com.pigs.MainActivity"
-            android:label="Pig" >
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -18,7 +18,7 @@
 
         <activity
             android:name=".Player2"
-            android:label="Pig">
+            android:label="@string/app_name">
         </activity>
     </application>
 
