@@ -45,20 +45,33 @@ public class MainActivity extends ActionBarActivity {
         button_decimal = (Button) findViewById(R.id.button_decimal);
         button_equals = (Button) findViewById(R.id.button_equals);
 
-        display_string = "";
-        string2 = "";
-        operator = "";
+        // Tests if any data is transferred from previous activities
+        try{
+            Intent intent = getIntent();
+            display_string = intent.getStringExtra("display");
+            string2 = intent.getStringExtra("string2");
+            operator = intent.getStringExtra("operator");
+            display.setText(display_string);
+        }
+        catch(Exception e){
+            display_string = "";
+            string2 = "";
+            operator = "";
+        }
+
         createClicks();
 
         button_adv = (Button) findViewById(R.id.button_adv);
         button_adv.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this,SciActivity.class);
-//                intent.putExtra("display", display_string);
-//                // prevents new stacks of activity
-//                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-//                startActivity(intent);
+                Intent intent = new Intent(MainActivity.this,SciActivity.class);
+                intent.putExtra("display", display_string);
+                intent.putExtra("string2", string2);
+                intent.putExtra("operator", operator);
+                // prevents new stacks of activity
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(intent);
             }
         });
 
@@ -140,6 +153,10 @@ public class MainActivity extends ActionBarActivity {
                         if (!display_string.isEmpty()) {
                             String tempString = display_string.substring(0, display_string.length() - 1);
                             display_string = tempString;
+                            display.setText(display_string);
+                        }
+                        else{
+                            display_string = "";
                             display.setText(display_string);
                         }
                         break;
