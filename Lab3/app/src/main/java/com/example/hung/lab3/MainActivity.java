@@ -51,7 +51,6 @@ public class MainActivity extends ActionBarActivity {
             display_string = intent.getStringExtra("display");
             string2 = intent.getStringExtra("string2");
             operator = intent.getStringExtra("operator");
-            String s = "";
             if (display_string == null)
                 display_string = "";
             if (string2 == null)
@@ -252,23 +251,100 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void calculate() {
-        double value1 = Double.parseDouble(string2);
-        double value2 = Double.parseDouble(display_string);
-        switch (operator) {
-            case "+":
-                result = value1 + value2;
-                break;
-            case "-":
-                result = value1 - value2;
-                break;
-            case "/":
-                result = value1 / value2;
-                break;
-            case "*":
-                result = value1 * value2;
-                break;
+        double string2Num = 0.0;
+        double displayNum = 0.0;
+        boolean string2HasI = false;
+        boolean displayHasI = false;
+        boolean isString2Number = true;
+        boolean isDisplayNumber = true;
+        try{
+            string2Num = Double.parseDouble(string2);
         }
-        operator = "";
+        catch (NumberFormatException e){
+            isString2Number = false;
+        }
+        try{
+            displayNum = Double.parseDouble(display_string);
+        }
+        catch (NumberFormatException e){
+            isDisplayNumber = false;
+        }
+        if(isString2Number && isDisplayNumber) {
+            switch (operator) {
+                case "+":
+                    result = string2Num + displayNum;
+                    break;
+                case "-":
+                    result = string2Num - displayNum;
+                    break;
+                case "/":
+                    result = string2Num / displayNum;
+                    break;
+                case "*":
+                    result = string2Num * displayNum;
+                    break;
+                case "sin":
+                    result = Math.sin(displayNum);
+                    break;
+                case "cos":
+                    result = Math.cos(displayNum);
+                    break;
+                case "tan":
+                    result = Math.tan(displayNum);
+                    break;
+                case "i":
+                    if (string2HasI && displayHasI && operator == "*")
+                        result = Double.parseDouble(getI());
+                    else
+                        display_string = getI();
+                    break;
+                case "ln":
+                    result = Math.log(displayNum);
+                    break;
+                case "log":
+                    result = Math.log10(displayNum);
+                    break;
+                case "e":
+                    if (display_string.isEmpty())
+                        result = Math.E;
+                    else
+                        result = Math.exp(displayNum);
+                    break;
+                case "percent":
+                    result = displayNum * 0.01;
+                    break;
+                case "root":
+                    result = Math.sqrt(displayNum);
+                    break;
+                case "factorial":
+                    try {
+                        int tempInt = Integer.parseInt(display_string);
+                        result = tempInt + 0.0;
+                        while (tempInt > 0) {
+                            result *= result * tempInt - 1;
+                            tempInt--;
+                        }
+                    } catch (Exception e) {
+                        display.setText("Error! Not an integer");
+                        display_string = "";
+                        string2 = "";
+                        operator = "";
+                    }
+                    break;
+            }
+            operator = "";
+        }
+        else if (isString2Number || isDisplayNumber){
+            result = Double.parseDouble(getI());
+        }
+        else {
+            display_string = "Error";
+            display.setText(display_string);
+        }
+    }
+
+    public String getI(){
+        return "0.0";
     }
 
     @Override

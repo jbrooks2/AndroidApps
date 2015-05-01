@@ -49,6 +49,12 @@ public class SciActivity extends ActionBarActivity {
             display_string = intent.getStringExtra("display");
             string2 = intent.getStringExtra("string2");
             operator = intent.getStringExtra("operator");
+            if (display_string == null)
+                display_string = "";
+            if (string2 == null)
+                string2 = "";
+            if (operator == null)
+                operator = "";
             display.setText(display_string);
         }
         catch(Exception e){
@@ -85,9 +91,9 @@ public class SciActivity extends ActionBarActivity {
         setOnClick(button_percent, "percent");
         setOnClick(button_factorial, "factorial");
         setOnClick(button_root, "root");
-//        setOnClick(button_power, "power");
-//        setOnClick(button_leftParen, "leftParen");
-//        setOnClick(button_rightParen, "rightParen");
+        setOnClick(button_power, "power");
+        setOnClick(button_leftParen, "leftParen");
+        setOnClick(button_rightParen, "rightParen");
     }
 
     public void setOnClick(Button button, final String s){
@@ -122,9 +128,7 @@ public class SciActivity extends ActionBarActivity {
                         display.setText(result+"");
                         break;
                     case "i":
-//                        operator = "i";
-//                        calculate();
-//                        display.setText(result+"");
+                        display_string += "i";
                         break;
                     case "ln":
                         operator = "ln";
@@ -180,50 +184,65 @@ public class SciActivity extends ActionBarActivity {
     }
 
     public void calculate() {
-        double value1 = Double.parseDouble(string2);
-        double value2 = Double.parseDouble(display_string);
+        double string2Num = 0.0;
+        double displayNum = 0.0;
+        boolean string2HasI = false;
+        boolean displayHasI = false;
+        try{
+            string2Num = Double.parseDouble(string2);
+            displayNum = Double.parseDouble(display_string);
+        }
+        catch (NumberFormatException e){
+            if (string2.contains("i)"))
+                string2HasI = true;
+            if (display_string.contains("i"))
+                displayHasI = true;
+        }
         switch (operator) {
             case "+":
-                result = value1 + value2;
+                result = string2Num + displayNum;
                 break;
             case "-":
-                result = value1 - value2;
+                result = string2Num - displayNum;
                 break;
             case "/":
-                result = value1 / value2;
+                result = string2Num / displayNum;
                 break;
             case "*":
-                result = value1 * value2;
+                result = string2Num * displayNum;
                 break;
             case "sin":
-                result = Math.sin(value2);
+                result = Math.sin(displayNum);
                 break;
             case "cos":
-                result = Math.cos(value2);
+                result = Math.cos(displayNum);
                 break;
             case "tan":
-                result = Math.tan(value2);
+                result = Math.tan(displayNum);
                 break;
-//            case "i":
-//                result = Math.(value2);
-//                break;
+            case "i":
+                if (string2HasI && displayHasI && operator == "*")
+                    result = Double.parseDouble(getI());
+                else
+                    display_string = getI();
+                break;
             case "ln":
-                result = Math.log(value2);
+                result = Math.log(displayNum);
                 break;
             case "log":
-                result = Math.log10(value2);
+                result = Math.log10(displayNum);
                 break;
             case "e":
                 if (display_string.isEmpty())
                     result = Math.E;
                 else
-                    result = Math.exp(value2);
+                    result = Math.exp(displayNum);
                 break;
             case "percent":
-                result = value2 * 0.01;
+                result = displayNum * 0.01;
                 break;
             case "root":
-                result = Math.sqrt(value2);
+                result = Math.sqrt(displayNum);
                 break;
             case "factorial":
                 try{
@@ -243,6 +262,10 @@ public class SciActivity extends ActionBarActivity {
                 break;
         }
         operator = "";
+    }
+
+    public String getI(){
+        return "0.0";
     }
 
     @Override
