@@ -62,6 +62,8 @@ public class SciActivity extends ActionBarActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SciActivity.this,MainActivity.class);
                 intent.putExtra("display", display_string);
+                intent.putExtra("string2", string2);
+                intent.putExtra("operator", operator);
                 // prevents new stacks of activity
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
@@ -223,13 +225,22 @@ public class SciActivity extends ActionBarActivity {
             case "root":
                 result = Math.sqrt(value2);
                 break;
-//            case "factorial":
-//                try{
-//                    int tempInt = Integer.parseInt(display_string);
-//
-//                }
-//                result = Math.sin(value2);
-//                break;
+            case "factorial":
+                try{
+                    int tempInt = Integer.parseInt(display_string);
+                    result = tempInt + 0.0;
+                    while (tempInt > 0){
+                        result *= result * tempInt - 1;
+                        tempInt--;
+                    }
+                }
+                catch(Exception e){
+                    display.setText("Error! Not an integer");
+                    display_string = "";
+                    string2 = "";
+                    operator = "";
+                }
+                break;
         }
         operator = "";
     }

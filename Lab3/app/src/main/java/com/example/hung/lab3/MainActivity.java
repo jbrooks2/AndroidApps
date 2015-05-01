@@ -51,6 +51,13 @@ public class MainActivity extends ActionBarActivity {
             display_string = intent.getStringExtra("display");
             string2 = intent.getStringExtra("string2");
             operator = intent.getStringExtra("operator");
+            String s = "";
+            if (display_string == null)
+                display_string = "";
+            if (string2 == null)
+                string2 = "";
+            if (operator == null)
+                operator = "";
             display.setText(display_string);
         }
         catch(Exception e){
