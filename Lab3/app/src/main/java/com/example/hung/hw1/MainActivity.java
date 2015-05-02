@@ -130,7 +130,7 @@ public class MainActivity extends ActionBarActivity {
                     case "zero":
                         if (is_string_pi || is_string_e)
                             display_string = 0 + "";
-                        else if (result != null && result == Double.parseDouble(display_string))
+                        else if (result != null && display_string != null && display_string.equals(result.toString()))
                             display_string = 0 + "";
                         else
                             display_string += 0;
@@ -138,7 +138,7 @@ public class MainActivity extends ActionBarActivity {
                     case "one":
                         if (is_string_pi || is_string_e)
                             display_string = 1 + "";
-                        else if (result != null && result == Double.parseDouble(display_string))
+                        else if (result != null && display_string != null && display_string.equals(result.toString()))
                             display_string = 1 + "";
                         else
                             display_string += 1;
@@ -146,7 +146,7 @@ public class MainActivity extends ActionBarActivity {
                     case "two":
                         if (is_string_pi || is_string_e)
                             display_string = 2 + "";
-                        else if (result != null && result == Double.parseDouble(display_string))
+                        else if (result != null && display_string != null && display_string.equals(result.toString()))
                             display_string = 2 + "";
                         else
                             display_string += 2;
@@ -154,7 +154,7 @@ public class MainActivity extends ActionBarActivity {
                     case "three":
                         if (is_string_pi || is_string_e)
                             display_string = 3 + "";
-                        else if (result != null && result == Double.parseDouble(display_string))
+                        else if (result != null && display_string != null && display_string.equals(result.toString()))
                             display_string = 3 + "";
                         else
                             display_string += 3;
@@ -162,7 +162,7 @@ public class MainActivity extends ActionBarActivity {
                     case "four":
                         if (is_string_pi || is_string_e)
                             display_string = 4 + "";
-                        else if (result != null && result == Double.parseDouble(display_string))
+                        else if (result != null && display_string != null && display_string.equals(result.toString()))
                             display_string = 4 + "";
                         else
                             display_string += 4;
@@ -170,7 +170,7 @@ public class MainActivity extends ActionBarActivity {
                     case "five":
                         if (is_string_pi || is_string_e)
                             display_string = 5 + "";
-                        else if (result != null && result == Double.parseDouble(display_string))
+                        else if (result != null && display_string != null && display_string.equals(result.toString()))
                             display_string = 5 + "";
                         else
                             display_string += 5;
@@ -178,7 +178,7 @@ public class MainActivity extends ActionBarActivity {
                     case "six":
                         if (is_string_pi || is_string_e)
                             display_string = 6 + "";
-                        else if (result != null && result == Double.parseDouble(display_string))
+                        else if (result != null && display_string != null && display_string.equals(result.toString()))
                             display_string = 6 + "";
                         else
                             display_string += 6;
@@ -186,7 +186,7 @@ public class MainActivity extends ActionBarActivity {
                     case "seven":
                         if (is_string_pi || is_string_e)
                             display_string = 7 + "";
-                        else if (result != null && result == Double.parseDouble(display_string))
+                        else if (result != null && display_string != null && display_string.equals(result.toString()))
                             display_string = 7 + "";
                         else
                             display_string += 7;
@@ -194,7 +194,7 @@ public class MainActivity extends ActionBarActivity {
                     case "eight":
                         if (is_string_pi || is_string_e)
                             display_string = 8 + "";
-                        else if (result != null && result == Double.parseDouble(display_string))
+                        else if (result != null && display_string != null && display_string.equals(result.toString()))
                             display_string = 8 + "";
                         else
                             display_string += 8;
@@ -202,7 +202,7 @@ public class MainActivity extends ActionBarActivity {
                     case "nine":
                         if (is_string_pi || is_string_e)
                             display_string = 9 + "";
-                        else if (result != null && result == Double.parseDouble(display_string))
+                        else if (result != null && display_string != null && display_string.equals(result.toString()))
                             display_string = 9 + "";
                         else
                             display_string += 9;
