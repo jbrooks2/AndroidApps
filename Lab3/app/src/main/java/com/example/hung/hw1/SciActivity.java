@@ -1,17 +1,14 @@
-package com.example.hung.lab3;
+package com.example.hung.hw1;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.GridLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.example.hung.lab3.R;
 
 
 public class SciActivity extends ActionBarActivity {
@@ -44,24 +41,18 @@ public class SciActivity extends ActionBarActivity {
         button_rightParen = (Button) findViewById(R.id.button_rightParen);
 
         // Tests if any data is transferred from previous activities
-        try{
-            Intent intent = getIntent();
-            display_string = intent.getStringExtra("display");
-            string2 = intent.getStringExtra("string2");
-            operator = intent.getStringExtra("operator");
-            if (display_string == null)
-                display_string = "";
-            if (string2 == null)
-                string2 = "";
-            if (operator == null)
-                operator = "";
-            display.setText(display_string);
-        }
-        catch(Exception e){
+        Intent intent = getIntent();
+        display_string = intent.getStringExtra("display");
+        string2 = intent.getStringExtra("string2");
+        operator = intent.getStringExtra("operator");
+        if (display_string == null)
             display_string = "";
+        if (string2 == null)
             string2 = "";
+        if (operator == null)
             operator = "";
-        }
+        display.setText(display_string);
+
         button_basic = (Button) findViewById(R.id.button_basic);
         button_basic.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -105,99 +96,86 @@ public class SciActivity extends ActionBarActivity {
                         if (!display_string.isEmpty()) {
                             String tempString = display_string.substring(0, display_string.length() - 1);
                             display_string = tempString;
-                            display.setText(display_string);
                         }
                         else{
+                            string2 = "";
                             display_string = "";
-                            display.setText(display_string);
                         }
                         break;
                     case "sin":
                         operator = "sin";
                         calculate();
-                        display.setText(result+"");
+                        display_string = result + "";
                         break;
                     case "cos":
                         operator = "cos";
                         calculate();
-                        display.setText(result+"");
+                        display_string = result + "";
                         break;
                     case "tan":
                         operator = "tan";
                         calculate();
-                        display.setText(result+"");
-                        break;
-                    case "i":
-                        display_string += "i";
+                        display_string = result + "";
                         break;
                     case "ln":
                         operator = "ln";
                         calculate();
-                        display.setText(result+"");
+                        display_string = result + "";
                         break;
                     case "log":
                         operator = "log";
                         calculate();
-                        display.setText(result+"");
+                        display_string = result + "";
                         break;
                     case "pi":
                         display_string = Math.PI + "";
-                        display.setText(display_string);
                         break;
                     case "e":
-                        operator = "e";
-                        calculate();
-                        display.setText(result+"");
+                        if (display_string.isEmpty())
+                            display_string = Math.E + "";
+                        else {
+                            operator = "e";
+                            calculate();
+                            display_string = result + "";
+                        }
                         break;
                     case "percent":
                         operator = "percent";
                         calculate();
-                        display.setText(result+"");
+                        display_string = result + "";
                         break;
                     case "factorial":
                         operator = "factorial";
                         calculate();
-                        display.setText(result+"");
+                        display_string = result + "";
                         break;
                     case "root":
                         operator = "root";
                         calculate();
-                        display.setText(result+"");
+                        display_string = result + "";
                         break;
                     case "power":
+                        operator = "^";
                         string2 = display_string;
                         display_string = "";
-                        display.setText(string2);
                         break;
                     case "leftParen":
                         display_string += "(";
-                        display.setText(display_string);
                         break;
                     case "rightParen":
                         display_string += ")";
-                        display.setText(display_string);
                         break;
                 }
+                display.setText(display_string);
             }
         });
-
     }
 
     public void calculate() {
         double string2Num = 0.0;
-        double displayNum = 0.0;
-        boolean string2HasI = false;
-        boolean displayHasI = false;
-        try{
+        if (!string2.isEmpty())
             string2Num = Double.parseDouble(string2);
-            displayNum = Double.parseDouble(display_string);
-        }
-        catch (NumberFormatException e){
-            if (string2.contains("i)"))
-                string2HasI = true;
-            if (display_string.contains("i"))
-                displayHasI = true;
-        }
+        double displayNum = Double.parseDouble(display_string);
         switch (operator) {
             case "+":
                 result = string2Num + displayNum;
@@ -220,12 +198,6 @@ public class SciActivity extends ActionBarActivity {
             case "tan":
                 result = Math.tan(displayNum);
                 break;
-            case "i":
-                if (string2HasI && displayHasI && operator == "*")
-                    result = Double.parseDouble(getI());
-                else
-                    display_string = getI();
-                break;
             case "ln":
                 result = Math.log(displayNum);
                 break;
@@ -245,29 +217,21 @@ public class SciActivity extends ActionBarActivity {
                 result = Math.sqrt(displayNum);
                 break;
             case "factorial":
-                try{
-                    int tempInt = Integer.parseInt(display_string);
-                    result = tempInt + 0.0;
-                    while (tempInt > 0){
-                        result *= result * tempInt - 1;
-                        tempInt--;
-                    }
-                }
-                catch(Exception e){
-                    display.setText("Error! Not an integer");
-                    display_string = "";
-                    string2 = "";
-                    operator = "";
-                }
+                getFactorial();
                 break;
         }
         operator = "";
     }
 
-    public String getI(){
-        return "0.0";
+    public void getFactorial(){
+        int tempInt = Integer.parseInt(display_string);
+        result = tempInt + 0.0;
+        tempInt--;
+        while (tempInt > 0) {
+            result *= tempInt;
+            tempInt--;
+        }
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

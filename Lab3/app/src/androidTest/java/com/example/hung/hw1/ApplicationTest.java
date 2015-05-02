@@ -1,4 +1,4 @@
-package com.example.hung.lab3;
+package com.example.hung.hw1;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

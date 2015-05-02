@@ -1,4 +1,4 @@
-package com.example.hung.lab3;
+package com.example.hung.hw1;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -7,11 +7,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.GridLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.example.hung.lab3.R;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -46,24 +42,17 @@ public class MainActivity extends ActionBarActivity {
         button_equals = (Button) findViewById(R.id.button_equals);
 
         // Tests if any data is transferred from previous activities
-        try{
-            Intent intent = getIntent();
-            display_string = intent.getStringExtra("display");
-            string2 = intent.getStringExtra("string2");
-            operator = intent.getStringExtra("operator");
-            if (display_string == null)
-                display_string = "";
-            if (string2 == null)
-                string2 = "";
-            if (operator == null)
-                operator = "";
-            display.setText(display_string);
-        }
-        catch(Exception e){
+        Intent intent = getIntent();
+        display_string = intent.getStringExtra("display");
+        string2 = intent.getStringExtra("string2");
+        operator = intent.getStringExtra("operator");
+        if (display_string == null)
             display_string = "";
+        if (string2 == null)
             string2 = "";
+        if (operator == null)
             operator = "";
-        }
+        display.setText(display_string);
 
         createClicks();
 
@@ -110,60 +99,50 @@ public class MainActivity extends ActionBarActivity {
                 switch (s){
                     case "zero":
                         display_string += 0;
-                        display.setText(display_string);
                         break;
                     case "one":
                         display_string += 1;
-                        display.setText(display_string);
                         break;
                     case "two":
                         display_string += 2;
-                        display.setText(display_string);
                         break;
                     case "three":
                         display_string += 3;
-                        display.setText(display_string);
                         break;
                     case "four":
                         display_string += 4;
-                        display.setText(display_string);
                         break;
                     case "five":
                         display_string += 5;
-                        display.setText(display_string);
                         break;
                     case "six":
                         display_string += 6;
-                        display.setText(display_string);
                         break;
                     case "seven":
                         display_string += 7;
-                        display.setText(display_string);
                         break;
                     case "eight":
                         display_string += 8;
-                        display.setText(display_string);
                         break;
                     case "nine":
                         display_string += 9;
-                        display.setText(display_string);
                         break;
                     case "decimal":
                         if (display_string.length() == 0)
                             display_string += "0.";
-                        else
-                            display_string += ".";
-                        display.setText(display_string);
+                        else {
+                            if (!display_string.contains("."))
+                                display_string += ".";
+                        }
                         break;
                     case "delete":
                         if (!display_string.isEmpty()) {
                             String tempString = display_string.substring(0, display_string.length() - 1);
                             display_string = tempString;
-                            display.setText(display_string);
                         }
                         else{
+                            string2 = "";
                             display_string = "";
-                            display.setText(display_string);
                         }
                         break;
                     case "add":
@@ -171,16 +150,15 @@ public class MainActivity extends ActionBarActivity {
                             string2 = display_string;
                             operator = "+";
                             display_string = "";
-                            display.setText(string2);
                         }
                         else {
-                            if (display_string.isEmpty())
-                                display_string += "0";
-                            calculate();
-                            string2 = result+"";
-                            display_string = "";
-                            operator = "+";
-                            display.setText(result+"");
+                            if (display_string.isEmpty()) {
+                                calculate();
+                                string2 = result + "";
+                                display_string = "";
+                                operator = "+";
+                                display_string = result + "";
+                            }
                         }
                         break;
                     case "subtract":
@@ -188,16 +166,15 @@ public class MainActivity extends ActionBarActivity {
                             string2 = display_string;
                             operator = "-";
                             display_string = "";
-                            display.setText(string2);
                         }
                         else {
-                            if (display_string.isEmpty())
-                                display_string += "0";
-                            calculate();
-                            string2 = result+"";
-                            display_string = "";
-                            operator = "-";
-                            display.setText(result+"");
+                            if (display_string.isEmpty()) {
+                                calculate();
+                                string2 = result + "";
+                                display_string = "";
+                                operator = "-";
+                                display_string = result + "";
+                            }
                         }
                         break;
                     case "multiply":
@@ -205,16 +182,15 @@ public class MainActivity extends ActionBarActivity {
                             string2 = display_string;
                             operator = "*";
                             display_string = "";
-                            display.setText(string2);
                         }
                         else {
-                            if (display_string.isEmpty())
-                                display_string += "0";
-                            calculate();
-                            string2 = result+"";
-                            display_string = "";
-                            operator = "*";
-                            display.setText(result+"");
+                            if (!display_string.isEmpty()) {
+                                calculate();
+                                string2 = result + "";
+                                display_string = "";
+                                operator = "*";
+                                display_string = result + "";
+                            }
                         }
                         break;
                     case "divide":
@@ -222,129 +198,91 @@ public class MainActivity extends ActionBarActivity {
                             string2 = display_string;
                             operator = "/";
                             display_string = "";
-                            display.setText(string2);
                         }
                         else {
-                            if (display_string.isEmpty())
-                                display_string += "0";
-                            calculate();
-                            string2 = result+"";
-                            display_string = "";
-                            operator = "/";
-                            display.setText(result+"");
+                            if (!display_string.isEmpty()) {
+                                calculate();
+                                string2 = result + "";
+                                display_string = "";
+                                operator = "/";
+                                display_string = result + "";
+                            }
                         }
                         break;
                     case "equals":
-                        if (operator.isEmpty())
-                            display.setText(display_string);
-                        else {
+                        if (!operator.isEmpty()) {
                             calculate();
                             string2 = "";
-                            display_string = "";
-                            display.setText(result+"");
+                            display_string = result + "";
                         }
                         break;
                 }
+                display.setText(display_string);
             }
         });
 
     }
 
     public void calculate() {
-        double string2Num = 0.0;
-        double displayNum = 0.0;
-        boolean string2HasI = false;
-        boolean displayHasI = false;
-        boolean isString2Number = true;
-        boolean isDisplayNumber = true;
-        try{
-            string2Num = Double.parseDouble(string2);
-        }
-        catch (NumberFormatException e){
-            isString2Number = false;
-        }
-        try{
-            displayNum = Double.parseDouble(display_string);
-        }
-        catch (NumberFormatException e){
-            isDisplayNumber = false;
-        }
-        if(isString2Number && isDisplayNumber) {
-            switch (operator) {
-                case "+":
-                    result = string2Num + displayNum;
-                    break;
-                case "-":
-                    result = string2Num - displayNum;
-                    break;
-                case "/":
-                    result = string2Num / displayNum;
-                    break;
-                case "*":
-                    result = string2Num * displayNum;
-                    break;
-                case "sin":
-                    result = Math.sin(displayNum);
-                    break;
-                case "cos":
-                    result = Math.cos(displayNum);
-                    break;
-                case "tan":
-                    result = Math.tan(displayNum);
-                    break;
-                case "i":
-                    if (string2HasI && displayHasI && operator == "*")
-                        result = Double.parseDouble(getI());
-                    else
-                        display_string = getI();
-                    break;
-                case "ln":
-                    result = Math.log(displayNum);
-                    break;
-                case "log":
-                    result = Math.log10(displayNum);
-                    break;
-                case "e":
-                    if (display_string.isEmpty())
-                        result = Math.E;
-                    else
-                        result = Math.exp(displayNum);
-                    break;
-                case "percent":
-                    result = displayNum * 0.01;
-                    break;
-                case "root":
-                    result = Math.sqrt(displayNum);
-                    break;
-                case "factorial":
-                    try {
-                        int tempInt = Integer.parseInt(display_string);
-                        result = tempInt + 0.0;
-                        while (tempInt > 0) {
-                            result *= result * tempInt - 1;
-                            tempInt--;
-                        }
-                    } catch (Exception e) {
-                        display.setText("Error! Not an integer");
-                        display_string = "";
-                        string2 = "";
-                        operator = "";
+        double string2Num = Double.parseDouble(string2);
+        double displayNum = Double.parseDouble(display_string);
+        switch (operator) {
+            case "+":
+                result = string2Num + displayNum;
+                break;
+            case "-":
+                result = string2Num - displayNum;
+                break;
+            case "/":
+                result = string2Num / displayNum;
+                break;
+            case "*":
+                result = string2Num * displayNum;
+                break;
+            case "sin":
+                result = Math.sin(displayNum);
+                break;
+            case "cos":
+                result = Math.cos(displayNum);
+                break;
+            case "tan":
+                result = Math.tan(displayNum);
+                break;
+            case "ln":
+                result = Math.log(displayNum);
+                break;
+            case "log":
+                result = Math.log10(displayNum);
+                break;
+            case "e":
+                if (display_string.isEmpty())
+                    result = Math.E;
+                else
+                    result = Math.exp(displayNum);
+                break;
+            case "percent":
+                result = displayNum * 0.01;
+                break;
+            case "root":
+                result = Math.sqrt(displayNum);
+                break;
+            case "factorial":
+                try {
+                    int tempInt = Integer.parseInt(display_string);
+                    result = tempInt + 0.0;
+                    while (tempInt > 0) {
+                        result *= result * tempInt - 1;
+                        tempInt--;
                     }
-                    break;
-            }
-            operator = "";
+                } catch (Exception e) {
+                    display.setText("Error! Not an integer");
+                    display_string = "";
+                    string2 = "";
+                    operator = "";
+                }
+                break;
         }
-        else if (isString2Number || isDisplayNumber){
-            result = Double.parseDouble(getI());
-        }
-        else {
-            display_string = "Error";
-            display.setText(display_string);
-        }
-    }
-
-    public String getI(){
-        return "0.0";
+        operator = "";
     }
 
     @Override
