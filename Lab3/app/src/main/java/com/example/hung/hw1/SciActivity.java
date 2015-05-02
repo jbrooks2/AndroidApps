@@ -3,7 +3,6 @@ package com.example.hung.hw1;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.MenuItem;
@@ -18,6 +17,7 @@ public class SciActivity extends ActionBarActivity {
             button_factorial, button_root, button_power, button_leftParen, button_rightParen;
     private Double result;
     private String display_string, string2, operator;
+    private Boolean is_string_pi, is_string_e, is_power_on;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +45,16 @@ public class SciActivity extends ActionBarActivity {
         display_string = intent.getStringExtra("display");
         string2 = intent.getStringExtra("string2");
         operator = intent.getStringExtra("operator");
+        try {
+            is_string_pi = intent.getBooleanExtra("is_string_pi", is_string_pi);
+            is_string_e = intent.getBooleanExtra("is_string_e", is_string_e);
+            is_power_on = intent.getBooleanExtra("is_power_on", is_power_on);
+        }
+        catch (NullPointerException e){
+            is_power_on = false;
+            is_string_e = false;
+            is_string_pi = false;
+        }
         if (display_string == null)
             display_string = "";
         if (string2 == null)
@@ -61,6 +71,9 @@ public class SciActivity extends ActionBarActivity {
                 intent.putExtra("display", display_string);
                 intent.putExtra("string2", string2);
                 intent.putExtra("operator", operator);
+                intent.putExtra("is_string_pi", is_string_pi);
+                intent.putExtra("is_string_e", is_string_e);
+                intent.putExtra("is_power_on", is_power_on);
                 // prevents new stacks of activity
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
@@ -93,13 +106,13 @@ public class SciActivity extends ActionBarActivity {
             public void onClick(View v) {
                 switch (s){
                     case "delete":
-                        if (!display_string.isEmpty()) {
-                            String tempString = display_string.substring(0, display_string.length() - 1);
-                            display_string = tempString;
-                        }
-                        else{
+                        if (display_string.isEmpty() || is_string_pi || is_string_e) {
                             string2 = "";
                             display_string = "";
+                        }
+                        else{
+                            String tempString = display_string.substring(0, display_string.length() - 1);
+                            display_string = tempString;
                         }
                         break;
                     case "sin":
@@ -128,11 +141,14 @@ public class SciActivity extends ActionBarActivity {
                         display_string = result + "";
                         break;
                     case "pi":
+                        is_string_pi = true;
                         display_string = Math.PI + "";
                         break;
                     case "e":
-                        if (display_string.isEmpty())
+                        if (display_string.isEmpty()) {
+                            is_string_e = true;
                             display_string = Math.E + "";
+                        }
                         else {
                             operator = "e";
                             calculate();
@@ -155,16 +171,17 @@ public class SciActivity extends ActionBarActivity {
                         display_string = result + "";
                         break;
                     case "power":
+                        is_power_on = true;
                         operator = "^";
                         string2 = display_string;
                         display_string = "";
                         break;
-                    case "leftParen":
-                        display_string += "(";
-                        break;
-                    case "rightParen":
-                        display_string += ")";
-                        break;
+//                    case "leftParen":
+//                        display_string += "(";
+//                        break;
+//                    case "rightParen":
+//                        display_string += ")";
+//                        break;
                 }
                 display.setText(display_string);
             }
@@ -205,10 +222,7 @@ public class SciActivity extends ActionBarActivity {
                 result = Math.log10(displayNum);
                 break;
             case "e":
-                if (display_string.isEmpty())
-                    result = Math.E;
-                else
-                    result = Math.exp(displayNum);
+                result = Math.exp(displayNum);
                 break;
             case "percent":
                 result = displayNum * 0.01;

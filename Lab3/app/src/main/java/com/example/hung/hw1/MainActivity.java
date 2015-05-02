@@ -17,6 +17,7 @@ public class MainActivity extends ActionBarActivity {
             button_subtract,button_multiply,button_divide,button_decimal,button_equals, button_adv;
     private Double result;
     private String display_string, string2, operator;
+    private Boolean is_string_pi, is_string_e, is_power_on;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +47,28 @@ public class MainActivity extends ActionBarActivity {
         display_string = intent.getStringExtra("display");
         string2 = intent.getStringExtra("string2");
         operator = intent.getStringExtra("operator");
+        try {
+            is_string_pi = intent.getBooleanExtra("is_string_pi", is_string_pi);
+            is_string_e = intent.getBooleanExtra("is_string_e", is_string_e);
+            is_power_on = intent.getBooleanExtra("is_power_on", is_power_on);
+        }
+        catch (NullPointerException e){
+            is_power_on = false;
+            is_string_e = false;
+            is_string_pi = false;
+        }
         if (display_string == null)
             display_string = "";
         if (string2 == null)
             string2 = "";
         if (operator == null)
             operator = "";
+//        if (is_string_pi == null)
+//            is_string_pi = false;
+//        if (is_string_e == null)
+//            is_string_e = false;
+//        if (is_power_on == null)
+//            is_power_on = false;
         display.setText(display_string);
 
         createClicks();
@@ -60,10 +77,13 @@ public class MainActivity extends ActionBarActivity {
         button_adv.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,SciActivity.class);
+                Intent intent = new Intent(MainActivity.this, SciActivity.class);
                 intent.putExtra("display", display_string);
                 intent.putExtra("string2", string2);
                 intent.putExtra("operator", operator);
+                intent.putExtra("is_string_pi", is_string_pi);
+                intent.putExtra("is_string_e", is_string_e);
+                intent.putExtra("is_power_on", is_power_on);
                 // prevents new stacks of activity
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
@@ -97,35 +117,95 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 switch (s){
+                    case "delete":
+                        if (display_string.isEmpty() || is_string_pi || is_string_e) {
+                            string2 = "";
+                            display_string = "";
+                        }
+                        else{
+                            String tempString = display_string.substring(0, display_string.length() - 1);
+                            display_string = tempString;
+                        }
+                        break;
                     case "zero":
-                        display_string += 0;
+                        if (is_string_pi || is_string_e)
+                            display_string = 0 + "";
+                        else if (result != null && result == Double.parseDouble(display_string))
+                            display_string = 0 + "";
+                        else
+                            display_string += 0;
                         break;
                     case "one":
-                        display_string += 1;
+                        if (is_string_pi || is_string_e)
+                            display_string = 1 + "";
+                        else if (result != null && result == Double.parseDouble(display_string))
+                            display_string = 1 + "";
+                        else
+                            display_string += 1;
                         break;
                     case "two":
-                        display_string += 2;
+                        if (is_string_pi || is_string_e)
+                            display_string = 2 + "";
+                        else if (result != null && result == Double.parseDouble(display_string))
+                            display_string = 2 + "";
+                        else
+                            display_string += 2;
                         break;
                     case "three":
-                        display_string += 3;
+                        if (is_string_pi || is_string_e)
+                            display_string = 3 + "";
+                        else if (result != null && result == Double.parseDouble(display_string))
+                            display_string = 3 + "";
+                        else
+                            display_string += 3;
                         break;
                     case "four":
-                        display_string += 4;
+                        if (is_string_pi || is_string_e)
+                            display_string = 4 + "";
+                        else if (result != null && result == Double.parseDouble(display_string))
+                            display_string = 4 + "";
+                        else
+                            display_string += 4;
                         break;
                     case "five":
-                        display_string += 5;
+                        if (is_string_pi || is_string_e)
+                            display_string = 5 + "";
+                        else if (result != null && result == Double.parseDouble(display_string))
+                            display_string = 5 + "";
+                        else
+                            display_string += 5;
                         break;
                     case "six":
-                        display_string += 6;
+                        if (is_string_pi || is_string_e)
+                            display_string = 6 + "";
+                        else if (result != null && result == Double.parseDouble(display_string))
+                            display_string = 6 + "";
+                        else
+                            display_string += 6;
                         break;
                     case "seven":
-                        display_string += 7;
+                        if (is_string_pi || is_string_e)
+                            display_string = 7 + "";
+                        else if (result != null && result == Double.parseDouble(display_string))
+                            display_string = 7 + "";
+                        else
+                            display_string += 7;
                         break;
                     case "eight":
-                        display_string += 8;
+                        if (is_string_pi || is_string_e)
+                            display_string = 8 + "";
+                        else if (result != null && result == Double.parseDouble(display_string))
+                            display_string = 8 + "";
+                        else
+                            display_string += 8;
                         break;
                     case "nine":
-                        display_string += 9;
+                        if (is_string_pi || is_string_e)
+                            display_string = 9 + "";
+                        else if (result != null && result == Double.parseDouble(display_string))
+                            display_string = 9 + "";
+                        else
+                            display_string += 9;
                         break;
                     case "decimal":
                         if (display_string.length() == 0)
@@ -133,16 +213,6 @@ public class MainActivity extends ActionBarActivity {
                         else {
                             if (!display_string.contains("."))
                                 display_string += ".";
-                        }
-                        break;
-                    case "delete":
-                        if (!display_string.isEmpty()) {
-                            String tempString = display_string.substring(0, display_string.length() - 1);
-                            display_string = tempString;
-                        }
-                        else{
-                            string2 = "";
-                            display_string = "";
                         }
                         break;
                     case "add":
@@ -266,6 +336,9 @@ public class MainActivity extends ActionBarActivity {
             case "root":
                 result = Math.sqrt(displayNum);
                 break;
+            case "^":
+                result = Math.pow(string2Num, displayNum);
+                break;
             case "factorial":
                 try {
                     int tempInt = Integer.parseInt(display_string);
@@ -274,7 +347,7 @@ public class MainActivity extends ActionBarActivity {
                         result *= result * tempInt - 1;
                         tempInt--;
                     }
-                } catch (Exception e) {
+                } catch (NumberFormatException e) {
                     display.setText("Error! Not an integer");
                     display_string = "";
                     string2 = "";
