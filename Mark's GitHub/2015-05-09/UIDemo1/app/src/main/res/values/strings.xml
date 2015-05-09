@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Demo App</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string-array name="spinner_values">
+        <item>Human</item>
+        <item>Non-human primate</item>
+        <item>Extraterrestrial humanoid</item>
+        <item>Unidentified ooze</item>
+
+    </string-array>
+</resources>
