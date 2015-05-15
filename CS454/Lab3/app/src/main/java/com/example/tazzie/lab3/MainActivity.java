@@ -20,6 +20,9 @@ import android.widget.Toast;
 import org.json.JSONException;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -63,7 +66,6 @@ public class MainActivity extends ActionBarActivity {
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         return (networkInfo != null && networkInfo.isConnected());
-//        return true;
     }
 
 
@@ -108,12 +110,12 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         protected Long doInBackground(String... strings) {
-            String dataString = "https://api.flickr.com/services/rest/" +
-                    "?method=flickr.photos.search&api_key="+Constants.API_KEY+"&min_upload_date=04%2F25%2F2015&lat="+Constants.LATITUDE+"&lon=" +
-                    Constants.LONGITUDE+"&radius="+Constants.RADIUS+"&radius_units=km&format=json&nojsoncallback=1";
+//            String dataString = "https://api.flickr.com/services/rest/" +
+//                    "?method=flickr.photos.search&api_key="+Constants.API_KEY+"&min_upload_date=04%2F25%2F2015&lat="+Constants.LATITUDE+"&lon=" +
+//                    Constants.LONGITUDE+"&radius="+Constants.RADIUS+"&radius_units=km&format=json&nojsoncallback=1";
 
-//            String dataString = "https://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api+key=" +
-//                   Constants.API_KEY + "&per_page=" + Constants.NUM_PHOTOS + "&format=json&nojsoncallback=1";
+            String dataString = "https://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api+key=" +
+                   Constants.API_KEY + "&per_page=" + Constants.NUM_PHOTOS + "&format=json&nojsoncallback=1";
             Log.i(Constants.TAG, dataString);
             try {
                 URL dataUrl = new URL(dataString);
@@ -172,6 +174,4 @@ public class MainActivity extends ActionBarActivity {
 
         }
     }
-
-
 }
